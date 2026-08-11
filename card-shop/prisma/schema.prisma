@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Card {
+  id             String      @id @default(cuid())
+  name           String
+  setName        String
+  cardNumber     String
+  rarity         String
+  // "RAW" or "GRADED"
+  conditionType  String
+  // For raw cards: "NM" | "LP" | "MP"
+  rawCondition   String?
+  // For graded cards: "PSA" | "CGC" | "BGS"
+  grader         String?
+  // For graded cards: "10", "9.5", "9", ...
+  grade          String?
+  priceCents     Int
+  // What you paid for the card (for the profit tracker).
+  costCents      Int         @default(0)
+  description    String?
+  featured       Boolean     @default(false)
+  // "AVAILABLE" or "SOLD"
+  status         String      @default("AVAILABLE")
+  soldPriceCents Int?
+  soldAt         DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  images         CardImage[]
+
+  @@index([status])
+  @@index([setName])
+}
+
+model CardImage {
+  id        String  @id @default(cuid())
+  card      Card    @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId    String
+  mimeType  String
+  // Base64-encoded image bytes (kept in the database so hosting stays free —
+  // no separate object storage needed).
+  data      String?
+  // Alternatively, an external image URL.
+  url       String?
+  sortOrder Int     @default(0)
+
+  @@index([cardId])
+}
