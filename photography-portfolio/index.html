@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Name — Photography</title>
+    <meta name="description" content="Photography portfolio of Your Name — landscape, portrait, and street photography." />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%230d0d0f'/><circle cx='8' cy='8' r='4' fill='none' stroke='%23d9a441' stroke-width='2'/></svg>" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html">Your Name</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <img
+          class="hero-image"
+          src="https://picsum.photos/id/1018/1600/1000"
+          srcset="
+            https://picsum.photos/id/1018/640/400   640w,
+            https://picsum.photos/id/1018/1024/640 1024w,
+            https://picsum.photos/id/1018/1600/1000 1600w,
+            https://picsum.photos/id/1018/2000/1250 2000w
+          "
+          sizes="100vw"
+          width="1600"
+          height="1000"
+          alt="Mist rolling over a forested mountain ridge at dawn"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div class="hero-content">
+          <h1>Your Name</h1>
+          <p class="tagline">Landscape · Portrait · Street</p>
+          <a class="button" href="gallery.html">View the work</a>
+        </div>
+      </section>
+
+      <section class="teaser" aria-label="Gallery categories">
+        <a href="gallery.html">
+          <img
+            src="https://picsum.photos/id/1015/800/600"
+            srcset="https://picsum.photos/id/1015/400/300 400w, https://picsum.photos/id/1015/800/600 800w"
+            sizes="(min-width: 40em) 33vw, 96vw"
+            width="800"
+            height="600"
+            alt="Alpine lake reflecting snow-capped peaks"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="teaser-label">Landscape</span>
+        </a>
+        <a href="gallery.html">
+          <img
+            src="https://picsum.photos/id/338/800/600"
+            srcset="https://picsum.photos/id/338/400/300 400w, https://picsum.photos/id/338/800/600 800w"
+            sizes="(min-width: 40em) 33vw, 96vw"
+            width="800"
+            height="600"
+            alt="Close-up portrait with shallow depth of field"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="teaser-label">Portrait</span>
+        </a>
+        <a href="gallery.html">
+          <img
+            src="https://picsum.photos/id/1029/800/600"
+            srcset="https://picsum.photos/id/1029/400/300 400w, https://picsum.photos/id/1029/800/600 800w"
+            sizes="(min-width: 40em) 33vw, 96vw"
+            width="800"
+            height="600"
+            alt="Pedestrians crossing a rain-soaked city street"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="teaser-label">Street</span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">© 2026 Your Name. All photographs are the property of the artist.</footer>
+  </body>
+</html>
