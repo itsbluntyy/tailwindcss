@@ -1,12 +1,52 @@
+import { cache } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { money, conditionLong } from "@/lib/format";
+import { money, conditionLong, conditionShort } from "@/lib/format";
+import { siteUrl } from "@/lib/site";
 import { ImageGallery } from "@/components/image-gallery";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { RarityBadge, SoldBadge } from "@/components/badges";
 
 export const dynamic = "force-dynamic";
+
+const getCard = cache((id: string) =>
+  prisma.card.findUnique({
+    where: { id },
+    include: { images: { orderBy: { sortOrder: "asc" } } },
+  }),
+);
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const card = await getCard(id);
+  if (!card) return {};
+
+  const title = `${card.name} — ${card.setName} #${card.cardNumber} (${conditionShort(card)})`;
+  const description =
+    card.description?.split("\n")[0] ??
+    `${card.name} from ${card.setName}, ${conditionLong(card)}. ${money(card.priceCents)} with fast, protected shipping.`;
+  const image = card.images[0]
+    ? `${siteUrl()}/api/images/${card.images[0].id}`
+    : undefined;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/cards/${card.id}` },
+    openGraph: {
+      title,
+      description,
+      url: `/cards/${card.id}`,
+      images: image ? [{ url: image, alt: card.name }] : undefined,
+    },
+  };
+}
 
 export default async function CardDetailPage({
   params,
@@ -14,16 +54,40 @@ export default async function CardDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const card = await prisma.card.findUnique({
-    where: { id },
-    include: { images: { orderBy: { sortOrder: "asc" } } },
-  });
+  const card = await getCard(id);
   if (!card) notFound();
 
   const sold = card.status === "SOLD";
 
+  // schema.org Product markup — makes listings eligible for Google's free
+  // product results and rich snippets (price, availability, image).
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${card.name} — ${card.setName} #${card.cardNumber}`,
+    description:
+      card.description ??
+      `${card.name} from ${card.setName}, ${conditionLong(card)}.`,
+    sku: card.id,
+    image: card.images.map((img) => `${siteUrl()}/api/images/${img.id}`),
+    offers: {
+      "@type": "Offer",
+      url: `${siteUrl()}/cards/${card.id}`,
+      price: (card.priceCents / 100).toFixed(2),
+      priceCurrency: "USD",
+      itemCondition: "https://schema.org/UsedCondition",
+      availability: sold
+        ? "https://schema.org/SoldOut"
+        : "https://schema.org/InStock",
+    },
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link href="/cards" className="text-sm text-ink-400 hover:text-ink-100">
         ← Back to all cards
       </Link>
