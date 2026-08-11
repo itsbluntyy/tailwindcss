@@ -122,6 +122,46 @@ but a webhook makes it bulletproof (covers buyers who close the tab):
 4. Copy the **Signing secret** (`whsec_…`) into a `STRIPE_WEBHOOK_SECRET`
    environment variable on Vercel and redeploy.
 
+## 6. Getting free traffic (how this becomes profitable)
+
+The whole stack is $0/month, so every dollar of margin on a card is profit.
+The missing ingredient is buyers, and the free way to get them is search and
+social — no ad spend required. The site ships with the SEO plumbing already
+built in:
+
+- **`/sitemap.xml`** — auto-generated, lists every available card.
+- **`/robots.txt`** — lets crawlers in, keeps them out of admin/cart/API
+  (except card photos, which stay crawlable for Google Images).
+- **Per-card SEO titles, descriptions, and social preview images** — links you
+  share on Discord/Reddit/X unfurl with the card photo and price.
+- **schema.org Product markup** on every card page — this makes listings
+  eligible for Google's **free** product results and rich snippets (price +
+  in-stock badge directly in search results).
+
+Do these once after deploying (all free):
+
+1. Set `NEXT_PUBLIC_SITE_URL` on Vercel to your real URL and redeploy.
+2. **Google Search Console** (<https://search.google.com/search-console>):
+   verify your domain and submit `https://<your-site>/sitemap.xml`. This is
+   the single highest-leverage free step.
+3. **Bing Webmaster Tools** — same thing, five minutes, also free.
+4. Write real descriptions on your listings (the admin Edit page). "PSA 9
+   Umbreon VMAX Alt Art, cert #12345678, minor whitening on back" ranks and
+   converts far better than an empty field.
+
+Free channels that actually sell cards:
+
+- **Reddit** (r/pkmntcgtrades and similar) and **Discord** TCG servers — share
+  the card page link; the preview image/price unfurl does the selling.
+- **Instagram/TikTok** — short videos of new pickups with the site link in bio
+  is how most small card shops get their first regulars.
+- **Local Facebook groups / card show contacts** — point repeat buyers at the
+  site so you keep 100% of the sale instead of paying eBay ~13%.
+
+Honest math: profit = (sale price − what you paid − Stripe's ~2.9% + 30¢ −
+shipping). Compared with selling the same cards on eBay, you're saving roughly
+10% in fees on every sale, which for most resellers *is* the profit margin.
+
 ## Day-to-day selling
 
 - **Add a listing:** `/admin` → *+ Add card* → fill in details, upload phone
