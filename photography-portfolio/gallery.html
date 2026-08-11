@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gallery — Your Name Photography</title>
+    <meta name="description" content="Landscape, portrait, and street photography by Your Name." />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%230d0d0f'/><circle cx='8' cy='8' r='4' fill='none' stroke='%23d9a441' stroke-width='2'/></svg>" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html">Your Name</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="gallery.html" aria-current="page">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page">
+      <h1 class="page-title">Gallery</h1>
+      <p class="page-intro">A selection of recent work. Use the filters to browse by category, and click any photo to view it full size.</p>
+
+      <div class="filters" data-filters role="group" aria-label="Filter photos by category"></div>
+
+      <div class="masonry" data-gallery></div>
+
+      <noscript>
+        <p class="gallery-empty">This gallery needs JavaScript to display photos.</p>
+      </noscript>
+    </main>
+
+    <dialog class="lightbox" data-lightbox aria-label="Photo viewer">
+      <div class="lightbox-inner">
+        <figure class="lightbox-figure">
+          <img data-lightbox-image src="" alt="" />
+          <figcaption data-lightbox-caption></figcaption>
+        </figure>
+        <div class="lightbox-controls">
+          <button type="button" class="lightbox-btn" data-lightbox-prev aria-label="Previous photo">&larr;</button>
+          <span class="lightbox-counter" data-lightbox-counter aria-live="polite"></span>
+          <button type="button" class="lightbox-btn" data-lightbox-next aria-label="Next photo">&rarr;</button>
+        </div>
+        <button type="button" class="lightbox-btn lightbox-close" data-lightbox-close aria-label="Close photo viewer">&times;</button>
+      </div>
+    </dialog>
+
+    <footer class="site-footer">© 2026 Your Name. All photographs are the property of the artist.</footer>
+
+    <script src="js/photos.js"></script>
+    <script src="js/gallery.js"></script>
+  </body>
+</html>
